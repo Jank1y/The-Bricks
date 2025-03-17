@@ -6,21 +6,22 @@
     <title>Breakout Igra</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <h1>The Bricks</h1>
-    <canvas id="canvas" width="480" height="320"></canvas>
-    <button id="startBtn">Začni igro</button>
-    <button id="pauseBtn">Pavza</button>
-    <button id="resetBtn">Ponastavi igro</button>
-    <p>
-      Težavnost:
-      <input type="range" id="difficultySlider" min="1" max="3" value="2" />
-      <span id="difficultyLabel">Srednje</span>
-    </p>
-    <p>Točke: <span id="score">0</span></p>
-    <p>Nivo: <span id="level">1</span></p>
-    <p>Najboljši rezultat: <span id="highScore">0</span></p>
-
+  <body tabindex="0">
+    <div class="main">
+      <h1>The Bricks</h1>
+      <canvas id="canvas" width="480" height="320" tabindex="0"></canvas>
+      <button id="startBtn">Začni igro</button>
+      <button id="pauseBtn">Pavza</button>
+      <button id="resetBtn">Ponastavi igro</button>
+      <p>
+        Težavnost:
+        <input type="range" id="difficultySlider" min="1" max="3" value="2" />
+        <span id="difficultyLabel">Srednje</span>
+      </p>
+      <p>Točke: <span id="score">0</span></p>
+      <p>Nivo: <span id="level">1</span></p>
+      <p>Najboljši rezultat: <span id="highScore">0</span></p>
+    </div>
     <script src="game.js"></script>
   </body>
 </html>

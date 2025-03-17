@@ -95,7 +95,7 @@ function drawBall() {
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = "#000";
+  ctx.fillStyle = "#8B4513";
   ctx.fill();
   ctx.closePath();
 }
@@ -236,6 +236,7 @@ function resetGame() {
 
 // Funkcija za začetek igre
 function startGame() {
+  document.getElementById("canvas").focus();
   if (!gameRunning) {
     gameRunning = true;
     updateDifficulty();
