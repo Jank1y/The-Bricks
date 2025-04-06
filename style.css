@@ -1,70 +1,104 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Bubble';
+  src: url('Font/Game Bubble.ttf');
 }
 
 body, html {
   width: 100%;
   height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: url('Images/61bf9399-ba7f-414f-9c35-2c06f4d2c06b.jpg') no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .main {
-  width: 100%;
-  height: 100%;
-  font-family: Arial, sans-serif;
   text-align: center;
-  background: url(Images/61bf9399-ba7f-414f-9c35-2c06f4d2c06b.jpg) no-repeat center center;
-  background-size: cover;
+  padding: 20px;
+  color: darkred;
+  font-weight: bold;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 h1 {
-  font-size: 5em;
+  font-family: 'Bubble', cursive;
+  font-size: 4em;
+  color: darkgreen;
   margin-bottom: 20px;
-  font-family: Bubble;
-  color: #8B4513; /* Earthy brown */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
 }
 
-#canvas {
-  border: 2px solid #FF6347; /* Tomato red, apple-like */
-  border-radius: 25px;
+canvas {
+  border: 2px solid tomato;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  margin-top: 20px;
   display: block;
-  margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.8);
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-button {
-  font-size: 1em;
-  padding: 10px 20px;
-  margin: 10px;
-  cursor: pointer;
-  background-color: #FF0000; /* Apple red */
-  color: white;
+.controls {
+  margin: 20px 0;
+}
+
+button, select {
+  padding: 12px 20px;
+  margin: 5px;
+  font-size: 1.1em;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  background-color: tomato;
+  color: white;
+  cursor: pointer;
   transition: 0.3s;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
 }
 
-button:hover {
-  background-color: #008000; /* Worm green */
+button:hover, select:hover {
+  background-color: green;
+  transform: scale(1.05);
 }
 
 button:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 p {
-  font-size: 1.2em;
-  color: #FF0000; /* Green apple shade */
+  font-size: 1.5em;
+  color: darkred;
+  margin-top: 10px;
 }
 
 #score,
-#level,
 #highScore {
   font-weight: bold;
-  color: #FF4500; /* Reddish-orange */
+  color: orangered;
 }
 
-@font-face {
-  font-family: Bubble;
-  src: url(Font/Game\ Bubble.ttf);
+body.swal2-shown.swal2-height-auto {
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+html.swal2-shown,
+body.swal2-shown {
+  margin: 0 !important;
+  padding: 0 !important;
 }

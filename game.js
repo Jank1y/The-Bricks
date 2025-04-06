@@ -1,4 +1,3 @@
-// Globalne spremenljivke
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
@@ -8,35 +7,50 @@ var x, y, dx, dy;
 
 // Ploščica
 var paddleHeight = 10;
-var paddleWidth = 75;
+var paddleWidth = 100;
 var paddleX;
 
 // Opeke
 var brickRowCount = 3;
-var brickColumnCount = 5;
-var brickWidth = 75;
-var brickHeight = 20;
-var brickPadding = 10;
-var brickOffsetTop = 30;
-var brickOffsetLeft = 30;
+var brickColumnCount = 11;
+var brickWidth = 50;
+var brickPadding = 20;
+var brickOffsetTop = 40;
+
+var totalBricksWidth = brickColumnCount * (brickWidth + brickPadding) - brickPadding;
+var brickOffsetLeft = (canvas.width - totalBricksWidth) / 2;
+
 var bricks = [];
 
+// Rezultati
 var score = 0;
-var level = 1;
 var highScore = localStorage.getItem("highScore") || 0;
 document.getElementById("highScore").innerText = highScore;
 
+// Slike jabolk
+const appleImages = [
+  "Images/red_apple.png",
+  "Images/green_apple.png",
+  "Images/orange_apple.png"
+];
+
+// Inicializacija opek
 for (var c = 0; c < brickColumnCount; c++) {
   bricks[c] = [];
   for (var r = 0; r < brickRowCount; r++) {
-    bricks[c][r] = { x: 0, y: 0, status: 1 };
+    bricks[c][r] = {
+      x: 0,
+      y: 0,
+      status: 1,
+      icon: new Image()
+    };
+    bricks[c][r].icon.src = appleImages[r % appleImages.length];
   }
 }
 
-// Inicializacija igre
 function initGame() {
   x = canvas.width / 2;
-  y = canvas.height - 30;
+  y = canvas.height - 40;
   dx = 2;
   dy = -2;
   paddleX = (canvas.width - paddleWidth) / 2;
@@ -44,54 +58,49 @@ function initGame() {
 
 initGame();
 
-// Predpostavimo, da imaš že naloženo sliko ikone
-var brickIcon = new Image();
-brickIcon.src = "Images/2137818_apple_food_fruit_organic_vegan_icon.png"; // Pot do tvoje ikone/slike
+// Slika žogice
+var ballIcon = new Image();
+ballIcon.src = "Images/2998113_animal_garden_gardening_insect_invertebrate_icon.png";
 
-// Funkcija za risanje opek z ikonami
+// Risanje opek z animacijo
 function drawBricks() {
+  var adjustedHeight = brickWidth / 1.05;
   for (var c = 0; c < brickColumnCount; c++) {
     for (var r = 0; r < brickRowCount; r++) {
-      if (bricks[c][r].status == 1) {
+      if (bricks[c][r].status === 1) {
         var brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-        var brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+        var brickY = r * (adjustedHeight + brickPadding) + brickOffsetTop;
         bricks[c][r].x = brickX;
         bricks[c][r].y = brickY;
 
-        // Nariši sliko ikone namesto običajne opeke
-        ctx.drawImage(brickIcon, brickX, brickY, brickWidth, brickHeight);
+        ctx.save();
+        ctx.translate(brickX + brickWidth / 2, brickY + adjustedHeight / 2);
+        ctx.scale(
+          1 + 0.03 * Math.sin(Date.now() / 250),
+          1 + 0.03 * Math.sin(Date.now() / 250)
+        );
+        ctx.drawImage(
+          bricks[c][r].icon,
+          -brickWidth / 2,
+          -adjustedHeight / 2,
+          brickWidth,
+          adjustedHeight
+        );
+        ctx.restore();
       }
     }
   }
 }
 
-// Predpostavimo, da imaš že naloženo sliko žogice
-var ballIcon = new Image();
-ballIcon.src = "Images/2998113_animal_garden_gardening_insect_invertebrate_icon.png"; // Pot do slike žogice
-
-// Funkcija za risanje žogice s sliko
+// Risanje žogice z rotacijo
 function drawBall() {
-  // Preveri, ali je slika že naložena
-  if (ballIcon.complete) {
-    // Nariši sliko žogice namesto kroga
-    ctx.drawImage(
-      ballIcon,
-      x - ballRadius,
-      y - ballRadius,
-      ballRadius * 2,
-      ballRadius * 2
-    );
-  } else {
-    // Če slika še ni naložena, jo lahko rišeš kot krog
-    ctx.beginPath();
-    ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "#333";
-    ctx.fill();
-    ctx.closePath();
-  }
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((Date.now() / 100) % (2 * Math.PI));
+  ctx.drawImage(ballIcon, -ballRadius, -ballRadius, ballRadius * 2, ballRadius * 2);
+  ctx.restore();
 }
 
-// Funkcija za risanje ploščice
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
@@ -100,54 +109,60 @@ function drawPaddle() {
   ctx.closePath();
 }
 
-// Funkcija za prikaz točk
 function drawScore() {
   document.getElementById("score").innerText = score;
 }
 
-// Funkcija za prikaz nivoja
-function updateLevel() {
-  document.getElementById("level").innerText = level;
-}
-
-// Funkcija za preverjanje trkov
 function collisionDetection() {
+  var adjustedHeight = brickWidth / 1.05;
   for (var c = 0; c < brickColumnCount; c++) {
     for (var r = 0; r < brickRowCount; r++) {
       var b = bricks[c][r];
-      if (b.status == 1) {
+      if (b.status === 1) {
         if (
           x > b.x &&
           x < b.x + brickWidth &&
           y > b.y &&
-          y < b.y + brickHeight
+          y < b.y + adjustedHeight
         ) {
           dy = -dy;
           b.status = 0;
           score++;
           drawScore();
-          if (score == brickRowCount * brickColumnCount) {
-            levelUp();
-          }
+          checkWin();
         }
       }
     }
   }
 }
 
-// Funkcija za prehod na naslednji nivo
-function levelUp() {
-  level++;
-  updateLevel();
-  score = 0;
-  for (var c = 0; c < brickColumnCount; c++) {
-    for (var r = 0; r < brickRowCount; r++) {
-      bricks[c][r].status = 1;
+function checkWin() {
+  let allCleared = true;
+  for (let c = 0; c < brickColumnCount; c++) {
+    for (let r = 0; r < brickRowCount; r++) {
+      if (bricks[c][r].status === 1) {
+        allCleared = false;
+        break;
+      }
     }
+  }
+
+  if (allCleared) {
+    clearInterval(gameInterval);
+    gameRunning = false;
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Zmaga!',
+      text: 'Vse opeke so uničene! 👏🍏',
+      confirmButtonText: 'Igraj znova',
+      heightAuto: false
+    }).then(() => {
+      resetGame();
+    });
   }
 }
 
-// **Glavna risalna funkcija**
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBricks();
@@ -155,9 +170,7 @@ function draw() {
   drawPaddle();
   collisionDetection();
 
-  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-    dx = -dx;
-  }
+  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) dx = -dx;
   if (y + dy < ballRadius) {
     dy = -dy;
   } else if (y + dy > canvas.height - ballRadius) {
@@ -171,17 +184,34 @@ function draw() {
   x += dx;
   y += dy;
 
-  if (rightPressed && !leftPressed && paddleX < canvas.width - paddleWidth) {
-    paddleX += 7;
-  } else if (leftPressed && !rightPressed && paddleX > 0) {
-    paddleX -= 7;
-  }
+  if (rightPressed && paddleX < canvas.width - paddleWidth) paddleX += 7;
+  else if (leftPressed && paddleX > 0) paddleX -= 7;
 }
 
-// **Dodana funkcionalnost za pavzo**
+function gameOver() {
+  clearInterval(gameInterval);
+  gameRunning = false;
+
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("highScore", highScore);
+    document.getElementById("highScore").innerText = highScore;
+  }
+
+  Swal.fire({
+    icon: 'error',
+    title: 'Konec igre!',
+    text: 'Izgubil si! Poskusi znova 🍎',
+    confirmButtonText: 'OK',
+    heightAuto: false
+  });
+}
+
 var gameInterval;
 var gameRunning = false;
 var gamePaused = false;
+var rightPressed = false;
+var leftPressed = false;
 
 function togglePause() {
   if (gameRunning) {
@@ -195,46 +225,39 @@ function togglePause() {
   }
 }
 
-// **POPOLNOMA POPRAVLJENA FUNKCIJA ZA TIPKE**
 document.addEventListener("keydown", function (e) {
-  if (e.key === "ArrowRight" || e.key === "Right") {
-    rightPressed = true;
-  } else if (e.key === "ArrowLeft" || e.key === "Left") {
-    leftPressed = true;
-  } else if (e.key === "Escape") {
-    togglePause();
-  }
+  if (e.key === "ArrowRight") rightPressed = true;
+  else if (e.key === "ArrowLeft") leftPressed = true;
+  else if (e.key === "Escape") togglePause();
 });
 
 document.addEventListener("keyup", function (e) {
-  if (e.key === "ArrowRight" || e.key === "Right") {
-    rightPressed = false;
-  } else if (e.key === "ArrowLeft" || e.key === "Left") {
-    leftPressed = false;
-  }
+  if (e.key === "ArrowRight") rightPressed = false;
+  else if (e.key === "ArrowLeft") leftPressed = false;
 });
 
-// Funkcija za ponastavitev igre
 function resetGame() {
   clearInterval(gameInterval);
   gameRunning = false;
   gamePaused = false;
   score = 0;
-  level = 1;
-  updateLevel();
-  initGame(); // Resetira položaj žogice in ploščice
+  drawScore();
+  initGame();
 
   for (var c = 0; c < brickColumnCount; c++) {
     for (var r = 0; r < brickRowCount; r++) {
       bricks[c][r].status = 1;
     }
   }
-
-  document.getElementById("score").innerText = score;
-  document.getElementById("level").innerText = level;
 }
 
-// Funkcija za začetek igre
+function updateDifficulty() {
+  var select = document.getElementById("difficultySelect");
+  var value = parseInt(select.value);
+  dx = value + 1;
+  dy = -(value + 1);
+}
+
 function startGame() {
   document.getElementById("canvas").focus();
   if (!gameRunning) {
@@ -244,23 +267,9 @@ function startGame() {
   }
 }
 
-// Gumbi
-document.getElementById("startBtn").addEventListener("click", startGame);
-document.getElementById("pauseBtn").addEventListener("click", togglePause);
-document.getElementById("resetBtn").addEventListener("click", resetGame);
-
-// **Dodana nastavitev težavnosti**
-var difficulty = 2;
-
-function updateDifficulty() {
-  var slider = document.getElementById("difficultySlider");
-  var label = document.getElementById("difficultyLabel");
-
-  difficulty = parseInt(slider.value);
-  dx = difficulty + 1;
-  dy = -(difficulty + 1);
-}
-
-document
-  .getElementById("difficultySlider")
-  .addEventListener("input", updateDifficulty);
+window.onload = () => {
+  document.getElementById("startBtn").addEventListener("click", startGame);
+  document.getElementById("pauseBtn").addEventListener("click", togglePause);
+  document.getElementById("resetBtn").addEventListener("click", resetGame);
+  document.getElementById("difficultySelect").addEventListener("change", updateDifficulty);
+};

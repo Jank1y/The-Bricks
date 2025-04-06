@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="sl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Breakout Igra</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body tabindex="0">
-    <div class="main">
-      <h1>The Bricks</h1>
-      <canvas id="canvas" width="480" height="320" tabindex="0"></canvas>
+<head>
+  <meta charset="UTF-8" />
+  <title>Jabolčni Zlom</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="main">
+    <h1>The Bricks</h1>
+
+    <!-- Platno -->
+    <canvas id="canvas" width="800" height="500"></canvas>
+
+    <!-- Gumbi -->
+    <div class="controls">
       <button id="startBtn">Začni igro</button>
       <button id="pauseBtn">Pavza</button>
       <button id="resetBtn">Ponastavi igro</button>
-      <p>
-        Težavnost:
-        <input type="range" id="difficultySlider" min="1" max="3" value="2" />
-        <span id="difficultyLabel">Srednje</span>
-      </p>
-      <p>Točke: <span id="score">0</span></p>
-      <p>Nivo: <span id="level">1</span></p>
-      <p>Najboljši rezultat: <span id="highScore">0</span></p>
+      <label for="difficultySelect">Težavnost:</label>
+      <select id="difficultySelect">
+        <option value="1">Lahko</option>
+        <option value="2" selected>Srednje</option>
+        <option value="3">Težko</option>
+      </select>
     </div>
-    <script src="game.js"></script>
-  </body>
+
+    <!-- Rezultati -->
+    <p>Točke: <span id="score">0</span></p>
+    <p>Najboljši rezultat: <span id="highScore">0</span></p>
+  </div>
+
+  <!-- Glavna skripta -->
+  <script src="game.js"></script>
+</body>
 </html>
