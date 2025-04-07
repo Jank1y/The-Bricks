@@ -1,31 +1,29 @@
-🍏 The Bricks 🍎
+# 🍏 The Bricks 🍎
 
-🎯 Cilj igre
-Vaša naloga je preprosta, a zabavna: z odbijanjem žogice s ploščico razbijte vsa jabolka na zaslonu. Pazite, da vam žogica ne uide mimo ploščice! Ko razbijete vsa jabolka, ste zmagali! 🥳
+**The Bricks** je zabavna in nostalgična arkadna igra, ki jo je ustvaril [Jank1y](https://github.com/Jank1y). 🎉 Spomni na legendarno igro "Breakout" – upravljajte ploščico, odbijajte žogico in razbijajte jabolka! 🏆
 
-🕹️ Kako igrati
-Začetek igre: Ko se igra naloži, pritisnite preslednico, da sprožite žogico.
+## 🎯 Cilj igre
 
-Upravljanje ploščice: Uporabite levo (←) in desno (→) puščično tipko za premikanje ploščice levo ali desno.
+Vaša naloga je preprosta, a zabavna: z odbijanjem žogice s ploščico razbijte vsa jabolka na zaslonu. 🍎  
+Pazite, da vam žogica ne uide mimo ploščice! 😬  
+Ko razbijete vsa jabolka, ste zmagali! 🥳
 
-Razbijanje jabolk: Odbijajte žogico s ploščico in ciljajte na jabolka, da jih razbijete.
+## 🕹️ Kako igrati
 
-💻 Namestitev in zagon
-Prenos igre: Obiščite GitHub repozitorij projekta in prenesite ZIP datoteko ali klonirajte repozitorij.
+1. **Začetek igre**: Ko se igra naloži, pritisnite **preslednico**, da sprožite žogico.
+2. **Upravljanje ploščice**: Uporabite **levo (←)** in **desno (→)** puščično tipko za premikanje ploščice.
+3. **Razbijanje jabolk**: Odbijajte žogico in ciljajte na jabolka, da jih razbijete.
 
-Zagon igre: Po prenosu odprite datoteko index.html v svojem priljubljenem spletnem brskalniku.
+4. ## 🛠️ Tehnologije uporabljene v igri
 
-🛠️ Tehnologije
-HTML: Struktura igre je definirana v datoteki index.html.
+Projekt **The Bricks** uporablja naslednje tehnologije:
 
-CSS: Oblikovanje in postavitev igre sta določena v datoteki style.css.
+- 🧱 **HTML** – za strukturo igre.
+- 🎨 **CSS** – za stil in postavitev.
+- ⚙️ **JavaScript** – za logiko in delovanje igre.
 
-JavaScript: Logika igre je implementirana v datoteki game.js.
+---
 
-👤 Avtor
-To zabavno igro je razvil Jank1y. Če imate vprašanja ali predloge, ga lahko kontaktirate preko njegovega GitHub profila.
+## 👤 Avtor
 
-📜 Licenca
-Informacije o licenci niso navedene v repozitoriju. Za več podrobnosti se obrnite na avtorja.
-
-Uživajte v igranju! 🚀
+Igro je razvil [Jank1y](https://github.com/Jank1y). 💻 
