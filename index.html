@@ -14,9 +14,10 @@
     <canvas id="canvas" width="800" height="500"></canvas>
 
     <div class="controls">
-      <button id="startBtn">Začni igro</button>
-      <button id="pauseBtn">Pavza</button>
-      <button id="resetBtn">Ponastavi igro</button>
+      <button id="startBtn">Nova igra</button>
+      <button id="pauseBtn">Pavza / Nadaljuj</button>
+      <button id="resetBtn">Ponovno zaženi nivo</button>
+
       <label for="difficultySelect">Težavnost:</label>
       <select id="difficultySelect">
         <option value="1">Lahko</option>
@@ -25,8 +26,12 @@
       </select>
     </div>
 
-    <p>Točke: <span id="score">0</span></p>
-    <p>Najboljši rezultat: <span id="highScore">0</span></p>
+    <div class="scoreboard">
+      <p>🧮 Točke: <span id="score">0</span></p>
+      <p>🏆 Najboljši rezultat: <span id="highScore">0</span></p>
+      <p>⏱️ Čas nivoja: <span id="time">0 s</span></p>
+      <p>🥇 Najboljši čas nivoja: <span id="bestTime">-</span></p>
+    </div>
   </div>
 
   <!-- Glavna skripta -->
