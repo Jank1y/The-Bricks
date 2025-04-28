@@ -372,6 +372,10 @@ function startGame() {
     levelElapsedTime = 0;
     updateTimerDisplay();
     gameInterval = setInterval(draw, 10);
+
+    // Skrij težavnost, ko igra teče
+    document.getElementById("difficultySelect").style.display = "none";
+    document.querySelector('label[for="difficultySelect"]').style.display = "none";
   }
 }
 
@@ -389,4 +393,19 @@ window.onload = () => {
   });
 
   document.getElementById("difficultySelect").addEventListener("change", updateDifficulty);
+
+  // NOVO: Dogodek za Vizitko
+  document.getElementById("infoBtn").addEventListener("click", () => {
+    Swal.fire({
+      title: 'Štrudl Bricks',
+      html: `
+        <p>🍏 Avtor: Jan Tavčar Kukanja</p>
+        <p>🍎 Mentor: Alen Andrlič</p>
+        <p>🍊 Jeziki: JavaScript, CSS ter HTML</p>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Zapri',
+      heightAuto: false
+    });
+  });
 };
